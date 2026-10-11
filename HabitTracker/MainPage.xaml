@@ -2,26 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HabitTracker.MainPage"
-             Title="Alışkanlıklarım">
+             Title="Alışkanlıklarım"
+             BackgroundColor="{AppThemeBinding Light=#F4F6FB, Dark=#121212}">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="20" RowSpacing="16">
 
-        <Entry x:Name="HabitEntry" Placeholder="Yeni alışkanlık yaz (örn. Su iç)" />
-        <Button Text="Ekle" Clicked="OnAddClicked" />
+        <Label Grid.Row="0"
+               Text="Bugün neleri yapacaksın?"
+               FontSize="26"
+               FontAttributes="Bold" />
 
-        <CollectionView x:Name="HabitList">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Border Grid.Column="0"
+                    StrokeThickness="0"
+                    Padding="12,0"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Entry x:Name="HabitEntry" Placeholder="Yeni alışkanlık yaz" />
+            </Border>
+
+            <Button Grid.Column="1"
+                    Text="Ekle"
+                    Clicked="OnAddClicked"
+                    BackgroundColor="#6C63FF"
+                    TextColor="White"
+                    CornerRadius="12" />
+        </Grid>
+
+        <CollectionView Grid.Row="2" x:Name="HabitList">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <HorizontalStackLayout Spacing="10" Padding="0,4">
-                        <CheckBox IsChecked="{Binding IsDone}"
-                                  CheckedChanged="OnCheckChanged"
-                                  VerticalOptions="Center" />
-                        <Label Text="{Binding Name}" FontSize="20" VerticalOptions="Center" />
-                        <Button Text="Sil" Clicked="OnDeleteClicked" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <Border StrokeThickness="0"
+                            Padding="12"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                            <CheckBox Grid.Column="0"
+                                      Color="#6C63FF"
+                                      IsChecked="{Binding IsDone}"
+                                      CheckedChanged="OnCheckChanged"
+                                      VerticalOptions="Center" />
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding Name}"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+
+                            <Button Grid.Column="2"
+                                    Text="Sil"
+                                    Clicked="OnDeleteClicked"
+                                    BackgroundColor="#FF5C5C"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    HeightRequest="40"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
