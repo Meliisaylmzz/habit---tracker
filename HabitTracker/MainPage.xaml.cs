@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         HabitList.ItemsSource = habits;
     }
-     
+
     void OnAddClicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(HabitEntry.Text))
@@ -19,5 +19,12 @@ public partial class MainPage : ContentPage
 
         habits.Add(new Habit { Name = HabitEntry.Text });
         HabitEntry.Text = "";
+    }
+
+    void OnDeleteClicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        var habit = (Habit)button.BindingContext;
+        habits.Remove(habit);
     }
 }
