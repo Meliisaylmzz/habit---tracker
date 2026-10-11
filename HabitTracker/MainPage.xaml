@@ -13,7 +13,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <HorizontalStackLayout Spacing="10" Padding="0,4">
-                        <CheckBox IsChecked="{Binding IsDone}" VerticalOptions="Center" />
+                        <CheckBox IsChecked="{Binding IsDone}"
+                                  CheckedChanged="OnCheckChanged"
+                                  VerticalOptions="Center" />
                         <Label Text="{Binding Name}" FontSize="20" VerticalOptions="Center" />
                         <Button Text="Sil" Clicked="OnDeleteClicked" VerticalOptions="Center" />
                     </HorizontalStackLayout>
