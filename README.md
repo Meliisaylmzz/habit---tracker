@@ -9,6 +9,8 @@ C# ve .NET MAUI ile geliştirdiğim, günlük alışkanlıkları takip eden bir 
 - Yeni alışkanlık ekleme
 - Alışkanlığı yapıldı olarak işaretleme
 - Alışkanlık silme
+- Seri (streak) sayacı: bir alışkanlığı üst üste kaç gün yaptığını gösterir, bir gün atlarsan seri sıfırlanır
+- Her yeni günde onay kutularının otomatik sıfırlanması
 - Verilerin SQLite ile cihazda kalıcı saklanması (uygulama kapanınca veriler kaybolmaz)
 - Kart tasarımı ve otomatik karanlık mod desteği
 
@@ -30,7 +32,7 @@ C# ve .NET MAUI ile geliştirdiğim, günlük alışkanlıkları takip eden bir 
 - [x] Alışkanlık ekleme, işaretleme ve silme
 - [x] SQLite ile veri kalıcılığı
 - [x] Kart tasarımı ve karanlık mod
-- [ ] Seri (streak) sayacı
+- [x] Seri (streak) sayacı
 - [ ] İstatistik ekranı
 - [ ] Birim testleri
 
