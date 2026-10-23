@@ -52,10 +52,14 @@
                                       CheckedChanged="OnCheckChanged"
                                       VerticalOptions="Center" />
 
-                            <Label Grid.Column="1"
-                                   Text="{Binding Name}"
-                                   FontSize="18"
-                                   VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="2">
+                                <Label Text="{Binding Name}" FontSize="18" />
+                                <Label Text="{Binding StreakText}"
+                                       FontSize="14"
+                                       TextColor="#FF9F43" />
+                            </VerticalStackLayout>
 
                             <Button Grid.Column="2"
                                     Text="Sil"

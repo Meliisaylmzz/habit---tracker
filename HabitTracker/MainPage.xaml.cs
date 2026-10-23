@@ -19,8 +19,32 @@ public partial class MainPage : ContentPage
 
         habits.Clear();
         var savedHabits = await database.GetHabitsAsync();
+        var today = DateTime.Today;
+
         foreach (var habit in savedHabits)
+        {
+            bool changed = false;
+            var last = habit.LastCompletedDate?.Date;
+
+            // Yeni bir gün başladıysa kutucuk boşalsın
+            if (last != today && habit.IsDone)
+            {
+                habit.IsDone = false;
+                changed = true;
+            }
+
+            // Dünden önce yapıldıysa (ya da hiç yapılmadıysa) seri kopmuştur
+            if ((last is null || last < today.AddDays(-1)) && habit.Streak != 0)
+            {
+                habit.Streak = 0;
+                changed = true;
+            }
+
+            if (changed)
+                await database.SaveHabitAsync(habit);
+
             habits.Add(habit);
+        }
     }
 
     async void OnAddClicked(object sender, EventArgs e)
@@ -37,11 +61,30 @@ public partial class MainPage : ContentPage
     async void OnCheckChanged(object sender, CheckedChangedEventArgs e)
     {
         var checkBox = (CheckBox)sender;
-        if (checkBox.BindingContext is Habit habit)
+        if (checkBox.BindingContext is not Habit habit)
+            return;
+
+        var today = DateTime.Today;
+        var last = habit.LastCompletedDate?.Date;
+
+        if (e.Value)
         {
-            habit.IsDone = e.Value;
-            await database.SaveHabitAsync(habit);
+            // İşaretlendi: bugün daha önce sayılmadıysa seriyi hesapla
+            if (last != today)
+            {
+                habit.Streak = (last == today.AddDays(-1)) ? habit.Streak + 1 : 1;
+                habit.LastCompletedDate = today;
+            }
         }
+        else if (last == today)
+        {
+            // İşaret kaldırıldı: bugünkü sayımı geri al
+            habit.Streak = Math.Max(0, habit.Streak - 1);
+            habit.LastCompletedDate = habit.Streak > 0 ? today.AddDays(-1) : null;
+        }
+
+        habit.IsDone = e.Value;
+        await database.SaveHabitAsync(habit);
     }
 
     async void OnDeleteClicked(object sender, EventArgs e)
