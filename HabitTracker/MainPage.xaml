@@ -5,14 +5,41 @@
              Title="Alışkanlıklarım"
              BackgroundColor="{AppThemeBinding Light=#F4F6FB, Dark=#121212}">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="20" RowSpacing="16">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="20" RowSpacing="16">
 
         <Label Grid.Row="0"
                Text="Bugün neleri yapacaksın?"
                FontSize="26"
                FontAttributes="Bold" />
 
-        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+        <Border Grid.Row="1"
+                StrokeThickness="0"
+                Padding="20"
+                BackgroundColor="#6C63FF">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20" />
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Bugünün özeti"
+                       FontSize="14"
+                       TextColor="#E0DEFF" />
+                <Label x:Name="SummaryLabel"
+                       Text="0 / 0 tamamlandı"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                <ProgressBar x:Name="SummaryProgress"
+                             Progress="0"
+                             ProgressColor="White" />
+                <Label x:Name="BestStreakLabel"
+                       Text="🏆 En uzun seri: 0 gün"
+                       FontSize="14"
+                       TextColor="White" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="10">
             <Border Grid.Column="0"
                     StrokeThickness="0"
                     Padding="12,0"
@@ -31,7 +58,7 @@
                     CornerRadius="12" />
         </Grid>
 
-        <CollectionView Grid.Row="2" x:Name="HabitList">
+        <CollectionView Grid.Row="3" x:Name="HabitList">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
             </CollectionView.ItemsLayout>

@@ -45,6 +45,8 @@ public partial class MainPage : ContentPage
 
             habits.Add(habit);
         }
+
+        UpdateSummary();
     }
 
     async void OnAddClicked(object sender, EventArgs e)
@@ -56,6 +58,7 @@ public partial class MainPage : ContentPage
         await database.SaveHabitAsync(habit);
         habits.Add(habit);
         HabitEntry.Text = "";
+        UpdateSummary();
     }
 
     async void OnCheckChanged(object sender, CheckedChangedEventArgs e)
@@ -85,6 +88,7 @@ public partial class MainPage : ContentPage
 
         habit.IsDone = e.Value;
         await database.SaveHabitAsync(habit);
+        UpdateSummary();
     }
 
     async void OnDeleteClicked(object sender, EventArgs e)
@@ -93,5 +97,17 @@ public partial class MainPage : ContentPage
         var habit = (Habit)button.BindingContext;
         await database.DeleteHabitAsync(habit);
         habits.Remove(habit);
+        UpdateSummary();
+    }
+
+    void UpdateSummary()
+    {
+        int total = habits.Count;
+        int done = habits.Count(h => h.IsDone);
+        int best = total == 0 ? 0 : habits.Max(h => h.Streak);
+
+        SummaryLabel.Text = $"{done} / {total} tamamlandı";
+        SummaryProgress.Progress = total == 0 ? 0 : (double)done / total;
+        BestStreakLabel.Text = $"🏆 En uzun seri: {best} gün";
     }
 }
